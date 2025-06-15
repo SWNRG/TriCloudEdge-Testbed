@@ -2,15 +2,15 @@
 
 ESP32 application with WiFi, WebSocket server, and MQTT client for AWS IoT. It is provides modularity, so you can enable/disable functionalities.
 
-<img src="pics/websocket_cl1.png" alt="websocket clinet 1" width="650">
+This project is a classic three-tier IoT architecture, from the far-edge to the edge, and eventually to the cloud. The system is designed for decentralized processing by distributing workloads across devices with different capability levels. 
 
-<img src="pics/websocket_cl2.png" alt="websocket clinet 1" width="650">
+<img src="pics/client-server.png" alt="client-server" width="650">
 
-<img src="pics/websocket_heartbeat.png" alt="websocket heartbeat" width="650">
+Figure 1:
+*Left:* Websocket client app sending a periodic ping and a cropped captured image with a face detected
+*Right:* Webvsocket server: acknowledge (pong) periodic heartbeat (ping), and sucessfuly receives an image from the client  
 
 ## Project Architecture and Purpose
-
-This project is a classic three-tier IoT architecture, from the far-edge to the edge, and eventually to the cloud. The system is designed for decentralized processing by distributing workloads across devices with different capability levels. 
 
 As the far-edge implementation, an ESP32-CAM camera module is responsible for initial face detection only, due to limited capabilities (i.e., detect a face in a particular frame in the video feed. NOTE: Only detect face, not identify). If a face is detected, the particular image only is transmitted over a WebSocket connection to the more powerful ESP32-S3 module, implementing the edge aspect. The WebSocket server running on it ensures a persistent, low-latency, robust communication with the far-edge devices (e.g., camera, sensors, etc.) for real-time applications.
 

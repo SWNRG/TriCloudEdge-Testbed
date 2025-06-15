@@ -1,5 +1,13 @@
 **IMPORTANT:** Read carefully the readme.md in the containing folder ../3-Level-Cloud for the full project architecture and description.
 
+Websocket server implementation 
+
+<img src="pics/websocket_cl1.png" alt="websocket clinet 1" width="650">
+
+<img src="pics/websocket_cl2.png" alt="websocket clinet 1" width="650">
+
+<img src="pics/websocket_heartbeat.png" alt="websocket heartbeat" width="650">
+
 This here, is the edge cloud part of a three-tier cloud implementation.
 
 In particular, the ESP32-S3 edge device performs facial recognition (identification) by comparing the received image against a local database of known faces. This intermediate step helps for rapid identification without cloud communication, reducing response time for standard, known faces (e.g., the database holds faces of all personnel).
