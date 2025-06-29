@@ -14,7 +14,7 @@
 #define EXTRA_HEAP_LOGGING 0 // print extensive logs for crash debugging purposes. TOO MUCH PRINTING!
 
 /* MODULE ENABLE FLAGS */
-#define MQTT_ENABLED 0
+#define MQTT_ENABLED 1
 #define WIFI_ENABLED 1
 #define WIFI_MAXIMUM_RETRY 5
 #define WEBSOCKET_ENABLED 1

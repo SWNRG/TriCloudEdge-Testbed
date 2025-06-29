@@ -25,14 +25,24 @@ This 3-tier approach shows an applicable far-edge-to-cloud pipeline, optimized f
 
 the client - server connection and communication was tested extensively. It seems robust and durable. The user gets to play with camera image parameters, connection keep-alive settings, and server face database storage and manipulation.
 
-# Client side
+### Client side
 
 The ESP32-Cam parameters are set in motion, it seems that it is rather difficult to adjust to specific ambient conditions. For example, the setup for artificial light brings very good results, but lowers the creditibilty when the sunlight appears. It seems that such scenery setup should be rather static and controllable.
 
-# Server side
+### Server side
 
 There is an option to update the database with new faces, as soon as they arive from the client. You can also delete all database and start fresh. 
 As soon as the detected face arrivers from the client, there is the choice of adding it to database if not found. OPEN TOPIC: Is there possibility to insert multiple faces for the same person?
+
+### mqtt broker
+
+Connection to AWS-IOT was tested and enriched with pub/sub functionalities.
+
+Check the pictures below, where the client edge device subscribes to a topic published within the console of AWS-IOT
+
+<img src="pics/aws-ioT-mqtt-pub.png" alt="aws-iot-publish" width="650">
+
+<img src="pics/aws-ioT-mqtt-sub.png" alt="aws-iot-subrscribe" width="650">
 
 ## Custom Data Transfer Protocol
 

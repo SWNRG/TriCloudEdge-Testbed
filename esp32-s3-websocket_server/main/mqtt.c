@@ -68,6 +68,15 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
             ESP_LOGI(TAG, "Sending initialization message: %s", init_message);
             mqtt_publish_message(client, MQTT_TOPIC_BASE "/status/connect", init_message, 1, 0);
             
+            /********************* Subscribing to an EXTRA topic ***************************/
+            int msg_id_status = esp_mqtt_client_subscribe(client, MQTT_TOPIC_STATUS, 1);
+            ESP_LOGI(TAG, "Subscribed to topic %s, msg_id=%d", MQTT_TOPIC_STATUS, msg_id_status);
+
+            const char* command_topic = MQTT_TOPIC_DEVICE "/commands";
+            int msg_id_cmd = esp_mqtt_client_subscribe(client, command_topic, 0);
+            ESP_LOGI(TAG, "Subscribed to topic %s, msg_id=%d", command_topic, msg_id_cmd);
+            /******************************************************************************/
+
             // Call the connection callback if registered
             if (connection_state_callback != NULL) {
                 connection_state_callback(true, client);

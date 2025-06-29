@@ -68,6 +68,16 @@ extern "C" void app_main(void) {
     }
 #endif
 
+#if MQTT_ENABLED
+    esp_mqtt_client_handle_t client = mqtt_aws_init();
+    if (client) {
+        if (mqtt_start(client) == ESP_OK) {
+             //ESP_LOGI(TAG, "AWS IoT MQTT sub started..."); // Msg already in mqtt_start
+             
+        }
+    }
+#endif
+
 // whie(true) is not currently doing much, can be extended...
     while (1) {
         vTaskDelay(pdMS_TO_TICKS(10000));
