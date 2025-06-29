@@ -3,7 +3,6 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 #include "esp_camera.h"
-#include <vector> // for std::vector
 
 // George struct for the bounding box.
 typedef struct {
@@ -18,7 +17,6 @@ typedef struct {
     camera_fb_t* fb;
     face_box_t box;
     uint32_t id; // The struct with a unique ID.
-	std::vector<int> keypoint; // keypoint member for bouncing box keypoints.
 } face_to_send_t;
 
 

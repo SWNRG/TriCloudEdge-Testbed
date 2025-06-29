@@ -40,3 +40,6 @@ Flash type set in eFuse: quad (4 data lines)
 Flash voltage set by eFuse to 3.3V
 Hard resetting via RTS pin...
 ```
+
+## Open topic
+There is a mixture between the idf_component.yml and the CMakeLists.txt. Ideally, there should be either the one or the other. The yml seems more modern approach (downloads automatically), yet...

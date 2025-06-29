@@ -1,14 +1,14 @@
-# ESP32 WebSocket && MQTT Application
+# ESP32 WebSocket && MQTT Application version 2.0.0
 
-ESP32 application with WiFi, WebSocket server, and MQTT client for AWS IoT. It is provides modularity, so you can enable/disable functionalities.
+ESP32 application with WiFi, WebSocket server, and MQTT client for AWS IoT. It provides modularity, so you can enable/disable functionalities.
 
-This project is a classic three-tier IoT architecture, from the far-edge to the edge, and eventually to the cloud. The system is designed for decentralized processing by distributing workloads across devices with different capability levels. 
+This project is a three-tier IoT architecture, from the far-edge to the edge, and eventually to the cloud. The system is designed for decentralized processing by distributing tasks based on the specific device characteristics and capabilities (memory, processing power, edge proximity, etc.). 
 
 <img src="pics/client-server.png" alt="client-server" width="650">
 
 Figure 1:
-*Left:* Websocket client app sending a periodic ping and a cropped captured image with a face detected
-*Right:* Webvsocket server: acknowledge (pong) periodic heartbeat (ping), and sucessfuly receives an image from the client  
+*Left:* Websocket client app sending a periodic ping and a cropped captured image with a face detected.
+*Right:* Webvsocket server: acknowledge (pong) periodic heartbeat (ping), and sucessfuly receives an image from the client.  
 
 ## Project Architecture and Purpose
 
@@ -19,6 +19,20 @@ The ESP32-S3 edge device performs facial recognition (identification) by compari
 If the face is not recognized in the local database, the ESP32-S3 transfers the task to the cloud tier via MQTT to send the image to AWS IoT for more intensive investigation, such as comparison against an extensive database or further analysis (e.g., false positives/negatives of sensors). 
 
 This 3-tier approach shows an applicable far-edge-to-cloud pipeline, optimized for speed and resource efficiency by assigning tasks at the appropriate level.
+
+
+## Changes in this version 2.0.0:
+
+the client - server connection and communication was tested extensively. It seems robust and durable. The user gets to play with camera image parameters, connection keep-alive settings, and server face database storage and manipulation.
+
+# Client side
+
+The ESP32-Cam parameters are set in motion, it seems that it is rather difficult to adjust to specific ambient conditions. For example, the setup for artificial light brings very good results, but lowers the creditibilty when the sunlight appears. It seems that such scenery setup should be rather static and controllable.
+
+# Server side
+
+There is an option to update the database with new faces, as soon as they arive from the client. You can also delete all database and start fresh. 
+As soon as the detected face arrivers from the client, there is the choice of adding it to database if not found. OPEN TOPIC: Is there possibility to insert multiple faces for the same person?
 
 ## Custom Data Transfer Protocol
 

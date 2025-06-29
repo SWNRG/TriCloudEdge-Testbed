@@ -1,0 +1,17 @@
+The following worked in WINDOWS. For Linux, you have to set the paths and the dir structure accordingly (e.g. / instead of \, etc.)
+
+To install QEMU, from an IDF priviledged terminal
+`python %IDF_PATH%\tools\idf_tools.py install qemu-xtensa`
+
+If you have PRSRAM enabled in `idf.py menuconfig` you need to disable it (remember to enable it back when using actual HW).
+Component config --->ESP PSRAM --->[*] Initialize PSRAM or similar, DISABLE IT.
+ 
+Dont forget this `idf.py set-target esp32s3` should complete succesfuly.
+
+If you see errors of "qemu not found", (re)run this `C:\Espressif\frameworks\esp-idf-v5.4.1\export.bat'. Obviously, adapt the `C:\Espressif` part. If all done well, `where qemu-system-xtensa` should return a result like `C:\Espressif\tools\qemu-xtensa\esp_develop_9.0.0_20240606\bin\qemu-system-xtensa.exe'
+
+Run QEMU with WIFI STATUS: FAIL
+Tried several proposals, but it did not succesfuly emulate the WIFI
+If anyone has it working, I will gladly add it
+
+idf.py qemu --qemu-extra-args "-netdev user,id=net1,hostfwd=tcp::8080-:80 -device esp32_eth,netdev=net1" monitor

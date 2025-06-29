@@ -49,7 +49,7 @@ esp_err_t websocket_server_send_text_client(int fd, const char* data);
 /**
  * @brief Checks if any WebSocket clients are currently connected.
  *
- * @return true if at least one client is connected, false otherwise. Use for further functionalities.
+ * @return true if at least one client is connected, false otherwise. Can extend functionalities.
  */
 bool websocket_server_is_client_connected(void);
 

@@ -1,5 +1,10 @@
+/*
+ * Functions to test modules of the application
+ * File WAS not updated, kept for compatibility. 
+ */
+
 #include <stdio.h>
-#include <stdlib.h> // For free()
+#include <stdlib.h> 
 #include "esp_log.h"
 #include "storage_manager.h"
 #include "app_diagnostics.h"
@@ -47,9 +52,11 @@ void diagnostics_run_database_test(void) {
     } else {
         ESP_LOGI(TAG, "Loaded %d faces from database", count);
         //Be careful, will print the whole database to terminal!
-        //for (int i = 0; i < count; i++) {
-        //    ESP_LOGI(TAG, "  - ID: %d, Name: %s, Title: %s", faces[i].id, faces[i].name, faces[i].title);
-        //}
+    #if EXTRA_HEAP_LOGGING
+        for (int i = 0; i < count; i++) {
+            ESP_LOGI(TAG, "  - ID: %d, Name: %s, Title: %s", faces[i].id, faces[i].name, faces[i].title);
+        }
+    #endif
     }
     ESP_LOGI(TAG, "Database diagnostics PASSED.");
 }

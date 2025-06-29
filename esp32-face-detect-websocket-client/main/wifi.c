@@ -2,7 +2,7 @@
 #include "esp_wifi.h"
 #include "esp_event.h"
 #include "esp_log.h"
-#include "secret.h" // WIFI_SSID and WIFI_PASSWORD. You have to create the file!
+#include "secret.h" // WIFI_SSID & WIFI_PASSWORD. You have to create the file!
 
 static const char* TAG_WIFI = "WIFI";
 

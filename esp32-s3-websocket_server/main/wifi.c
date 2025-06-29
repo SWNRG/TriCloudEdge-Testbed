@@ -66,7 +66,8 @@ void wifi_init_sta(void)
 
     ESP_LOGI(TAG, "wifi_init_sta finished");
     
-    // Wait for connection (blocking call). Maybe you want to add a function to die if not connected within XX min...
+    // Wait for connection (blocking call). Maybe you want to add a functionality to die 
+    // if not connected within XX min...
     xEventGroupWaitBits(wifi_event_group, WIFI_CONNECTED_BIT, false, true, portMAX_DELAY);
 }
 

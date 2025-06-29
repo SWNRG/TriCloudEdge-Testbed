@@ -22,7 +22,8 @@ extern EventGroupHandle_t wifi_event_group;
 extern const int WIFI_CONNECTED_BIT;
 
 /**
- * @brief Initialize WiFi as a station and connect to the access point via configuration parameters (SSID, passowrd)
+ * @brief Initialize WiFi as a station and connect to the access point via 
+ * configuration parameters (SSID, passowrd) in config.h (have to be created!).
  * 
  * Will block until there is a WiFi connection
  */
