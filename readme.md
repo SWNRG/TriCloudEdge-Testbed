@@ -42,7 +42,7 @@ Check the pictures below, where the client edge device subscribes to a topic pub
 
 <img src="pics/aws-ioT-mqtt-pub.png" alt="aws-iot-publish" width="650">
 
-<img src="pics/aws-ioT-mqtt-sub.png" alt="aws-iot-subrscribe" width="650">
+<img src="pics/aws-iot-mqtt-sub.png" alt="aws-iot-subrscribe" width="650">
 
 ## Custom Data Transfer Protocol
 
