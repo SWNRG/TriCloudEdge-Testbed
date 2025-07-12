@@ -11,11 +11,11 @@
 
 **TriCloudEdge v3.0**, is a three-tier IoT system designed to distribute tasks across a **Far-Edge, Edge, and Cloud Continuum**. An ESP32-CAM at the far-edge detects a face, crops the image, and sends it to a more powerful ESP32-S3 acting as the edge server. The edge device then tries to recognize the face against a local database; if the face is not found, the image is forwarded to the CLoud (AWS) for more intensive analysis with services like Amazon Rekognition. This architecture can have speed and resource efficiency by processing data at the right level, utilizing WebSockets for edge communication and HTTP & MQTT for cloud integration.
 
-**⚠️ TriCloudEdge v3.0: Major Updates (No compatibility with v2.0**
+## ⚠️ TriCloudEdge v3.0: Major Updates (No compatibility with v2.0)
 
 This version is **not backward-compatible** with v2.0. The architecture, codebase, and setup have been restructured for robustness, scalability, testing, and usability. The previous v2.0 code is in [v2.0.0 tag](https://github.com/georgevio/TriCloudEdge/tree/v2.0.0) for reference only.
 
-## Updates in v3.0
+**Updates in v3.0**
 
 TriCloudEdge v3.0 has now a **decoupled, service-oriented architecture**.
 It includes several new items, i.e., NTP time sync (essential for cloud sync like AWS), MQTT robust connections, fully functional face rekognition in AWS, S3 functional bucket in AWS, messages back to ESP32-S3 (edge) of face identified over MQTT, and message of the same over websocket with the face id results to the ESP32-CAM (far edge). In the far edge a separate message handler mechanism can be further extended. 
@@ -23,7 +23,6 @@ It includes several new items, i.e., NTP time sync (essential for cloud sync lik
 Some core principles of v3.0:
 * **Scalability:** Each part of the system (data ingestion, face processing, cloud communication) is an independent service that can be scaled or updated separately.
 * **Extensibility:** Easily add new types of AI models, or cloud integrations by adding new services.
-
 
 **ESP32 Far Edge-Edge-Cloud IoT Application**
 
