@@ -9,6 +9,8 @@
 
 <img src="pics/john_doe.png" alt="TriCloudEdge v3.0 Architecture" width="700">
 
+**TriCloudEdge v3.0**, is a three-tier IoT system designed to distribute tasks across a **Far-Edge, Edge, and Cloud Continuum**. An ESP32-CAM at the far-edge detects a face, crops the image, and sends it to a more powerful ESP32-S3 acting as the edge server. The edge device then tries to recognize the face against a local database; if the face is not found, the image is forwarded to the CLoud (AWS) for more intensive analysis with services like Amazon Rekognition. This architecture can have speed and resource efficiency by processing data at the right level, utilizing WebSockets for edge communication and HTTP & MQTT for cloud integration.
+
 **⚠️ TriCloudEdge v3.0: Major Updates (No compatibility with v2.0**
 
 This version is **not backward-compatible** with v2.0. The architecture, codebase, and setup have been restructured for robustness, scalability, testing, and usability. The previous v2.0 code is in [v2.0.0 tag](https://github.com/georgevio/TriCloudEdge/tree/v2.0.0) for reference only.
