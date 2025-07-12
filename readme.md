@@ -4,14 +4,14 @@
 
 **⚠️ TriCloudEdge v3.0: Major Updates (No compatibility with v2.0**
 
-This version is **not backward-compatible** with v2.0. The architecture, codebase, and setup have been restructured for robustness, scalability, testing, and usability. The previous v2.0 code can be found under the [v2.0.0 tag](https://github.com/georgevio/TriCloudEdge/tree/v2.0.0) for reference only.
+This version is **not backward-compatible** with v2.0. The architecture, codebase, and setup have been restructured for robustness, scalability, testing, and usability. The previous v2.0 code is in [v2.0.0 tag](https://github.com/georgevio/TriCloudEdge/tree/v2.0.0) for reference only.
 
 ## Updates in v3.0
 
 TriCloudEdge v3.0 has now a **decoupled, service-oriented architecture**.
 It includes several new items, i.e., NTP time sync (essential for cloud sync like AWS), MQTT robust connections, fully functional face rekognition in AWS, S3 functional bucket in AWS, messages back to ESP32-S3 (edge) of face identified over MQTT, and message of the same over websocket with the face id results to the ESP32-CAM (far edge). In the far edge a separate message handler mechanism can be further extended. 
 
-Some core principles of v3.0 include:
+Some core principles of v3.0:
 * **Scalability:** Each part of the system (data ingestion, face processing, cloud communication) is an independent service that can be scaled or updated separately.
 * **Extensibility:** Easily add new types of AI models, or cloud integrations by adding new services.
 
@@ -22,17 +22,17 @@ This document provides a complete overview and setup guide for a three-tier IoT 
 
 **Project Architecture and Purpose**
 
-This project implements a three-tier IoT system optimized for speed and resource efficiency by assigning tasks to the most appropriate level.
+The project implements a three-tier IoT system optimized for speed and resource efficiency by assigning tasks to the most appropriate level of the continuum (far edge-edge-cloud).
 
 1.  **Far-Edge (ESP32-CAM):** This tier is responsible for initial **face detection**. Due to limited processing capabilities (remember the cost of an ESP32-CAM), it can only detect the presence of a face in the video feed. Once a face is detected, it crops the image to the face\'s bounding box and transmits only that smaller image to the edge device saving resources.
 
-2.  **Edge (ESP32-S3):** This more powerful device (AI-capable) acts as the edge server. It receives the face image from the far-edge device over a     WebSocket connection. It then performs **facial recognition** by     comparing the image against a local database of known faces stored in its flash memory. This allows for rapid identification without cloud latency.
+2.  **Edge (ESP32-S3):** This more powerful device (AI-capable) acts as the edge server. It receives the face image from the far-edge device over a WebSocket connection. It then performs **facial recognition** by comparing the image against a local database of known faces stored in its flash memory. This allows for rapid identification without cloud latency.
 
 3.  **Cloud (AWS IoT):** If the face is not recognized in the local database at the edge, the ESP32-S3 forwards the image to the cloud tier via http and signals a message over MQTT. AWS can then perform more intensive investigations, such as comparison against a much larger database or other advanced analytics and models (e.g., federated AI). Currently, it utilizes the face rekognizer service of AWS.
 
 **System Architecture Diagram**
 
-Mermaid Graph 
+Abstract Representation of Basic Flow
 
 ```mermaid
 graph TD
@@ -83,7 +83,7 @@ graph TD
 
 **Custom Data Transfer Protocol**
 
-To ensure stable communication between the ESP32-CAM (client) and ESP32-S3 (server), a custom protocol is used. Initial implementations showed that sending a full, uncompressed image (\~150KB) in a single chunk would overflowthe server\'s networking buffers, corrupting the LwIP stack and causing repeated crashes (there are a lot of memory logs acroos the server libraries, trying to debug those crashes).
+To ensure stable communication between the ESP32-CAM (client-far edge) and ESP32-S3 (server-edge), a custom protocol is used. Initial debugging showed that sending a full, uncompressed image (\~150KB) in a single chunk overflows the server\'s buffers, and corrupts the LwIP stack, causing repeated crashes (there are a lot of memory logs acroos the server libraries, trying to debug those crashes!).
 
 The solution is a client-side fragmentation strategy:
 
@@ -116,9 +116,9 @@ The output will also show detected features like flash size (e.g., 16MB) and PSR
 
 **IMPORTANT: Critical Library Versions**
 
--   **Client (ESP32-CAM):** This project requires a specific version of     the Espressif face detection libraries. You **must** use the     /components/esp-dl directory from **esp-who v1.1.0**, as newer versions are not compatible with the ESP32-CAM for face detection.  Several component files have been modified for this project (marked with ```// George```).
+-   **Client (ESP32-CAM):** The project requires a specific (older) version of the Espressif face detection libraries. You **must only** use the ```/components/esp-dl``` directory from **esp-who v1.1.0**, as newer versions are not compatible with the ESP32-CAM for face detection.  Several component files have been modified for this project (marked with ```// George```).
 
--   **Server (ESP32-S3):** The WebSocket server code has been updated to     be compatible with ESP-IDF v5.4.1. Be careful with shared library     versions. It is good practice to re-check ```menuconfig``` settings after any changes to libraries or CMakeLists.txt, as settings can sometimes be reset.
+-   **Server (ESP32-S3):** The WebSocket server code has been updated to     be compatible with ESP-IDF v5.4.1. Be careful with shared library versions. It is good practice to re-check ```menuconfig``` settings after any changes to libraries or CMakeLists.txt, as settings can sometimes be reset. An updated strategy would be to try to port all libraries via the ```idf_component.yml```, which was never tested!
 
 **Project Setup and Configuration**
 
@@ -141,7 +141,7 @@ Bash
 
 **Step 3: Configure Credentials (certificates/secrets.h)**
 
-**IMPORTANT:** Create a file named secrets.h inside the certificates/ directory. There is a reference template ```secrets.h.template```.  This file should **not** be committed to version control. Put there all sensitive information (WIFI SSID/Password, AWS upload URI, etc.).
+**IMPORTANT:** Create a file named secrets.h inside the certificates/ directory. There is a reference template ```secrets.h.template```.  This file should **not** be committed to version control (the name is in the ignore list). Put there all sensitive information (WIFI SSID/Password, AWS upload URI, etc.).
 
 **Example certificates/secrets.h:**
 
@@ -190,7 +190,7 @@ C
 ```
 
 
-** AWS MQTT Broker Connection **
+**AWS MQTT Broker Connection**
 
 Connection to AWS-IOT was tested and enriched with pub/sub functionalities.
 Check the pictures below, where the client edge device subscribes to a topic published within the console of AWS-IOT.
@@ -311,15 +311,12 @@ AWS Rekognizer produces a lot of false positives! The screenshots below are the 
 Yet, there are cases, where the face was not recognized (correctly) by the rekognizer:
 <img src="pics/unrecognized_server_1.png" alt="unrecognized_server_1" width="650">
 
-
 At the initialization phase of the far-edge device (ESP32-CAM) error occur while trying to trasfer a file:
 <img src="pics/image_transfer_error.png" alt="image_transfer_error" width="650">
 
-Visitor correctly Identified (Giorgos Papandreou)
-
+**Visitor correctly Identified (Giorgos Papandreou)**
 <img src="pics/giorgos_papandreou_server.png" alt="giorgos_papandreou_server" width="650">
 <img src="pics/giorgos_papandreou_client.png" alt="giorgos_papandreou_client" width="650">
 
-** SPECIAL VVIP CASE! **
-
+**SPECIAL VVIP CASE!**
 <img src="pics/bill_at_gate.png" alt="bill_at_gate" width="650">
