@@ -1,5 +1,12 @@
 # TriCloudEdge v3.0: 3-layer Cloud Edge Platform
 
+![GitHub issues](https://img.shields.io/github/issues/georgevio/TriCloudEdge)
+![GitHub forks](https://img.shields.io/github/forks/georgevio/TriCloudEdge)
+![GitHub stars](https://img.shields.io/github/stars/georgevio/TriCloudEdge)
+![GitHub license](https://img.shields.io/github/license/georgevio/TriCloudEdge)
+![GitHub last commit](https://img.shields.io/github/last-commit/georgevio/TriCloudEdge)
+![Repo size](https://img.shields.io/github/repo-size/georgevio/TriCloudEdge)
+
 <img src="pics/john_doe.png" alt="TriCloudEdge v3.0 Architecture" width="700">
 
 **⚠️ TriCloudEdge v3.0: Major Updates (No compatibility with v2.0**
