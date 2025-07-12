@@ -7,7 +7,7 @@
 ![GitHub last commit](https://img.shields.io/github/last-commit/georgevio/TriCloudEdge)
 ![Repo size](https://img.shields.io/github/repo-size/georgevio/TriCloudEdge)
 
-<img src="pics/john_doe.png" alt="TriCloudEdge v3.0 Architecture" width="700">
+<img src="pics/john_doe.png" alt="TriCloudEdge v3.0 Architecture" width="750">
 
 **TriCloudEdge v3.0**, is a three-tier IoT system designed to distribute tasks across a **Far-Edge, Edge, and Cloud Continuum**. An ESP32-CAM at the far-edge detects a face, crops the image, and sends it to a more powerful ESP32-S3 acting as the edge server. The edge device then tries to recognize the face against a local database; if the face is not found, the image is forwarded to the CLoud (AWS) for more intensive analysis with services like Amazon Rekognition. This architecture can have speed and resource efficiency by processing data at the right level, utilizing WebSockets for edge communication and HTTP & MQTT for cloud integration.
 
@@ -24,7 +24,7 @@ Some core principles of v3.0:
 * **Scalability:** Each part of the system (data ingestion, face processing, cloud communication) is an independent service that can be scaled or updated separately.
 * **Extensibility:** Easily add new types of AI models, or cloud integrations by adding new services.
 
-**ESP32 Far Edge-Edge-Cloud IoT Application**
+## ESP32 Far Edge-Edge-Cloud IoT Application
 
 This document provides a complete overview and setup guide for a three-tier IoT architecture project using ESP32 devices and AWS cloud services. The system is designed for decentralized processing, distributing tasks from the far-edge (ESP32-CAM) to the edge (ESP32-S3) and finally to the Cloud (currently AWS-IOT).
 
