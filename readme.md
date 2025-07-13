@@ -45,7 +45,8 @@ The default log level for all modules (both system- and user-level) is set in co
 ```
 
 ***Module-Specific Log Levels***
-For individual control, et the log level for specific modules within the configure_system_logging() function in main.cpp. You can debug individual component(s) without being flooded with messages from all other modules (if all enabled it will be a cataclysms of messages!).
+
+For individual control, set the log level for specific modules within the ```configure_system_logging()``` function in main.cpp. You can debug individual component(s) without being flooded with messages from all other modules (CAREFUL: if all enabled it will be a cataclysm of messages!).
 
 ```
 // In main.cpp
@@ -356,9 +357,13 @@ python %IDF_PATH%\\tools\\idf_tools.py install qemu-xtensa
 
 ## RUNTIME DISCUSSION
 
-AWS Rekognizer produces a lot of false positives! The screenshots below are the same (live) face, on the same time, been recognized as many different (famous) persons
+AWS Rekognizer produces a lot of false positives! The screenshots below are the same (live) face, on the same time, been recognized as many different (famous) persons!
+
 <img src="pics/false_pos_server.png" alt="false_pos_server" width="650">	
 <img src="pics/false_pos_client_2.png" alt="false_pos_client_2" width="650">
+
+Here below, in the bottom upload, the AWS Rekognizer correctly did not identify my mediocracy as a famous person :) 
+<img src="pics/false_pos_server_2.png" alt="false_pos_server_2" width="650">
 
 Yet, there are cases, where the face was not recognized (correctly) by the rekognizer:
 <img src="pics/unrecognized_server_1.png" alt="unrecognized_server_1" width="650">
