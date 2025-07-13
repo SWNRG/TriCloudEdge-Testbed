@@ -24,6 +24,50 @@ Some core principles of v3.0:
 * **Scalability:** Each part of the system (data ingestion, face processing, cloud communication) is an independent service that can be scaled or updated separately.
 * **Extensibility:** Easily add new types of AI models, or cloud integrations by adding new services.
 
+## Centralized logging
+
+Version 3.0 is using the ESP-IDF logging library for centralized easy-to-use detailed diagnostics. The logging behavior can be customized for either the entire system or for specific module only to handle ad hoc debugging.
+
+***Global Log Level***
+
+The default log level for all modules (both system- and user-level) is set in config.h. Modify the DEFAULT_SYSTEM_LOG_LEVEL variable accordingly. Accepted levels are also mentioned as below.
+
+```
+// In config.h
+/*
+ * Set the default log level if not otherwise set, for
+ * system level applications.
+ * Available levels:
+ * ESP_LOG_NONE, ESP_LOG_ERROR, ESP_LOG_WARN,
+ * ESP_LOG_INFO, ESP_LOG_DEBUG, ESP_LOG_VERBOSE
+ */
+#define DEFAULT_SYSTEM_LOG_LEVEL ESP_LOG_WARN
+```
+
+***Module-Specific Log Levels***
+For individual control, et the log level for specific modules within the configure_system_logging() function in main.cpp. You can debug individual component(s) without being flooded with messages from all other modules (if all enabled it will be a cataclysms of messages!).
+
+```
+// In main.cpp
+static void configure_system_logging() {
+    // Set the level for all modules first
+    esp_log_level_set("*", DEFAULT_SYSTEM_LOG_LEVEL);
+
+    // Set differet level for individual modules
+    esp_log_level_set("MAIN", ESP_LOG_INFO);
+    esp_log_level_set("WIFI", ESP_LOG_INFO);
+	
+    esp_log_level_set("S3_UPLOADER", ESP_LOG_VERBOSE);
+}
+```
+***Viewing Verbose Logs***
+
+***IMPORTANT:*** To view log messages higher than INFO (e.g., DEBUG, VERBOSE), you ***MUST*** configure the project using the ESP-IDF menuconfig tool:
+	Run ```idf.py menuconfig``` in the project's root directory.
+	Goto ```Component config -> Log output```.
+	Change ```Maximum log verbosity``` from Info to Verbose.
+Save  and exit.
+
 ## ESP32 Far Edge-Edge-Cloud IoT Application
 
 This document provides a complete overview and setup guide for a three-tier IoT architecture project using ESP32 devices and AWS cloud services. The system is designed for decentralized processing, distributing tasks from the far-edge (ESP32-CAM) to the edge (ESP32-S3) and finally to the Cloud (currently AWS-IOT).
