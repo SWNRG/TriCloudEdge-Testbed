@@ -1,4 +1,4 @@
-# TriCloudEdge v3.0: 3-layer Cloud Edge Platform
+# TriCloudEdge-Testbed (Forked from TriCloudEdge v3.0)
 
 ![GitHub issues](https://img.shields.io/github/issues/georgevio/TriCloudEdge)
 ![GitHub forks](https://img.shields.io/github/forks/georgevio/TriCloudEdge)
@@ -10,6 +10,27 @@
 <img src="pics/john_doe.png" alt="TriCloudEdge v3.0 Architecture" width="900">
 
 **TriCloudEdge v3.0**, is a three-tier IoT system designed to distribute tasks across a **Far-Edge, Edge, and Cloud Continuum**. An ESP32-CAM at the far-edge detects a face, crops the image, and sends it to a more powerful ESP32-S3 acting as the edge server. The edge device then tries to recognize the face against a local database; if the face is not found, the image is forwarded to the CLoud (AWS) for more intensive analysis with services like Amazon Rekognition. This architecture can have speed and resource efficiency by processing data at the right level, utilizing WebSockets for edge communication and HTTP & MQTT for cloud integration.
+
+## Fork Purpose
+A testbed for edge-to-cloud facial recognition using ESP32-CAM and ESP32-S3 devices. This project enables mass image capture, local face matching, and cloud-based verification via AWS Rekognition — with real-time feedback over MQTT and WebSocket.
+
+### Fork Overview and Differences
+
+This fork of [TriCloudEdge](https://github.com/georgevio/TriCloudEdge) is targeting:
+- Store AI created images (~500) on ESP32-CAM (SD Card will be used)
+- Perform face detection and cropping on the ESP32-CAM
+- Send cropped faces (size ~50KB) to ESP32-S3 for local database comparison (several faces will be inserted to local dB)
+- Forward un-identified faces to AWS Rekognition via HTTP and inform over MQTT
+- Receive recognition results and relay them back via MQTT for ESP32-S3, and via websocket to ESP32-CAM
+
+## Architecture
+As per below described project TriCloudEdge
+ESP32-CAM → ESP32-S3 → AWS Rekognition → MQTT → ESP32-S3 → WebSocket → ESP32-CAM
+
+### Dataset
+
+Using DigiFace1M — a free academic dataset of AI-generated faces for training and testing: 
+https://github.com/microsoft/DigiFace1M.git
 
 ## ⚠️ TriCloudEdge v3.0: Major Updates (No compatibility with v2.0)
 
